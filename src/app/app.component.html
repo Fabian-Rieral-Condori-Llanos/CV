@@ -1,0 +1,156 @@
+<!-- Loading Screen -->
+@if (isLoading()) {
+  <div class="loading-screen" aria-hidden="true">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <h1 class="loading-title">FABIAN RIERAL</h1>
+      <p class="loading-subtitle">Cargando Portfolio...</p>
+    </div>
+  </div>
+}
+
+<!-- Main App Content -->
+<div class="app-container" [class.loaded]="!isLoading()">
+  
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="skip-to-content">Ir al contenido principal</a>
+
+  <!-- Header -->
+  <header role="banner" itemscope itemtype="https://schema.org/Person">
+    <div class="container">
+      <div class="hero-content">
+        <h1 itemprop="name">{{ personalInfo().name }}</h1>
+        <p class="subtitle" itemprop="jobTitle">{{ personalInfo().title }}</p>
+        
+        <div class="hero-contact" role="region" aria-label="Información de contacto">
+          <div class="contact-card" itemprop="telephone">
+            <a (click)="onPhoneClick()" style="cursor: pointer;">
+              <span class="contact-icon" aria-hidden="true">📱</span>
+              <span>{{ personalInfo().phone.replace('+591', '') }}</span>
+            </a>
+          </div>
+          <div class="contact-card" itemprop="email">
+            <a (click)="onEmailClick()" style="cursor: pointer;">
+              <span class="contact-icon" aria-hidden="true">📧</span>
+              <span>{{ personalInfo().email }}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">↓</div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+    
+    <!-- Profile Section -->
+    <section aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading">PERFIL PROFESIONAL</h2>
+        <p class="profile-description" [innerHTML]="profileDescription()"></p>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section aria-labelledby="skills-heading">
+      <div class="container">
+        <h2 id="skills-heading">COMPETENCIAS TÉCNICAS</h2>
+        <div class="skills-grid">
+          @for (skill of skills(); track skill.name) {
+            <div class="skill-item">
+              <span class="skill-name">{{ skill.name }}</span>
+              <div class="skill-level">
+                @for (star of getStars(skill.level); track $index) {
+                  <span class="skill-star" [class.filled]="star" aria-hidden="true">⭐</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Languages Section -->
+    <section aria-labelledby="languages-heading">
+      <div class="container">
+        <h2 id="languages-heading">COMPETENCIAS LINGÜÍSTICAS</h2>
+        <div class="languages-grid">
+          @for (language of languages(); track language.name) {
+            <div class="language-item">
+              <span class="language-name">{{ language.name }}</span>
+              <div class="skill-level">
+                @for (star of getStars(language.level); track $index) {
+                  <span class="skill-star" [class.filled]="star" aria-hidden="true">⭐</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section aria-labelledby="experience-heading">
+      <div class="container">
+        <h2 id="experience-heading">EXPERIENCIA PROFESIONAL</h2>
+        <div class="experience-timeline">
+          @for (experience of experiences(); track experience.company + experience.year) {
+            <article class="timeline-item" itemscope itemtype="https://schema.org/WorkExperience">
+              <h3 class="timeline-year">
+                <time [dateTime]="experience.year" itemprop="startDate">{{ experience.year }}</time>
+              </h3>
+              <h4 class="timeline-title" itemprop="jobTitle">
+                {{ experience.title }} en <span itemprop="employer">{{ experience.company }}</span>
+              </h4>
+              <p class="timeline-role" itemprop="description">{{ experience.role }}</p>
+              <ul class="timeline-tasks" itemprop="responsibilities">
+                @for (responsibility of experience.responsibilities; track responsibility) {
+                  <li>{{ responsibility }}</li>
+                }
+              </ul>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section aria-labelledby="education-heading">
+      <div class="container">
+        <h2 id="education-heading">FORMACIÓN ACADÉMICA Y CERTIFICACIONES</h2>
+        <div class="education-grid">
+          @for (edu of education(); track edu.institution + edu.year) {
+            <article class="education-item" itemscope itemtype="https://schema.org/EducationalOccupationalCredential">
+              <h3 class="edu-year">
+                <time [dateTime]="edu.year" itemprop="dateCreated">{{ edu.year }}</time>
+              </h3>
+              <h4 class="edu-institution" itemprop="credentialCategory">{{ edu.institution }}</h4>
+              <p class="edu-course" itemprop="name">{{ edu.course }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer role="contentinfo" class="footer">
+    <div class="container">
+      <p>&copy; {{ getCurrentYear() }} {{ personalInfo().name }}. Todos los derechos reservados.</p>
+      <p>Técnico Superior en Informática especializado en Ciberseguridad</p>
+    </div>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <button 
+    class="scroll-to-top"
+    (click)="scrollToSection('main-content')"
+    [class.visible]="!isLoading()"
+    aria-label="Volver al inicio"
+    title="Volver al inicio">
+    ↑
+  </button>
+
+</div>

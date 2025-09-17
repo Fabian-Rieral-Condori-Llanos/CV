@@ -1,6 +1,7 @@
 {
   "name": "fabian-rieral-cv",
   "version": "0.0.0",
+  "description": "Portfolio profesional de Fabian Rieral Condori Llanos - Técnico Superior en Informática especializado en Ciberseguridad",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -20,13 +21,28 @@
       }
     ]
   },
+  "keywords": [
+    "angular",
+    "portfolio",
+    "cybersecurity",
+    "frontend",
+    "bolivia",
+    "cv",
+    "resume"
+  ],
+  "author": "Fabian Rieral Condori Llanos",
+  "license": "MIT",
   "private": true,
   "dependencies": {
+    "@angular/animations": "^20.3.0",
+    "@angular/cdk": "^20.2.3",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
+    "@angular/material": "^20.2.3",
     "@angular/platform-browser": "^20.3.0",
+    "@angular/platform-browser-dynamic": "^20.3.0",
     "@angular/router": "^20.3.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
